@@ -1,0 +1,16 @@
+{% extends 'place/base.html' %}
+
+{% block content %}
+<ul class="list-articles">
+	{% for addr, descr in adr_cat_dict.items %}
+			<li><h2>{{addr}} || {{descr.0}}</h2>
+
+	{% autoescape on %}
+	{{descr.1|linebreaks|truncatewords:50}}
+	{% endautoescape %}
+			<div class="clear"></div>
+			<p class="link-read-post"><a href="#">Читать пост</a></p>
+			</li>
+	{% endfor %}
+</ul>
+{% endblock %}
