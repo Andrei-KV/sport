@@ -3,30 +3,35 @@ from django.shortcuts import render, redirect
 
 from .models import *
 
-menu = ["About", "Add place", "Log In"]
+menu = [
+    {'title': 'About', 'url_name': 'about',},
+    {'title': 'Add place', 'url_name': 'add_place',},
+    {'title': 'Log In', 'url_name': 'login'},
+    ]
 
 def index(request):
     addresses = Address.objects.all()
-    adr_cat_dict = {}
     for i in addresses:
-        adr_cat_dict[i.title] = [i.sport_category.title, i.description.description]
-    return render(request, 'place/index.html', {'adr_cat_dict': adr_cat_dict, 'menu': menu, 'title': 'Head page'})
+        print(i.pk, type(i.pk))
+    context = {
+        'addresses': addresses, 
+        'menu': menu, 
+        'title': 'Head page',
+        }
+    return render(request, 'place/index.html', context)
 
 def about(request):
-    return render(request, 'place/index.html', {'menu': menu, 'title': 'About site'})
+    return HttpResponse('About site')
 
+def add_place(request):
+    return HttpResponse('Add place')
 
-def categories(request, catid):
-    if request.POST:
-        print(request.POST)
-
-    return HttpResponse(f"<h1>Статьи по категориям</h1><p>{catid}</p>")
-
-def archive(request, year):
-    if int(year) > 2020:
-        return redirect('home', permanent=False)
-
-    return HttpResponse(f"<h1>Архив по годам</h1><p>{year}</p>")
-
+def login(request):
+    return HttpResponse('Log In')
+  
+def show_place(request, place_id):
+    print(place_id)
+    return HttpResponse(f'PLACE {place_id}')
+   
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')

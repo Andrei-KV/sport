@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 class SportCategory(models.Model):
     title = models.CharField(max_length=255)
@@ -16,6 +17,9 @@ class Address(models.Model):
 
     def __str__(self):
         return self.title  
+    
+    def get_absolute_url(self):
+        return reverse('place', kwargs={'place_id': self.pk})
 
 class Description(models.Model):
     description = models.TextField(blank=True)
