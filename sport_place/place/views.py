@@ -10,13 +10,14 @@ menu = [
     ]
 
 def index(request):
+    cats = SportCategory.objects.all()
     addresses = Address.objects.all()
-    for i in addresses:
-        print(i.pk, type(i.pk))
     context = {
-        'addresses': addresses, 
+        'addresses': addresses,
+        'cats': cats, 
         'menu': menu, 
         'title': 'Head page',
+        'cat_selected': 0,
         }
     return render(request, 'place/index.html', context)
 
@@ -32,6 +33,20 @@ def login(request):
 def show_place(request, place_id):
     print(place_id)
     return HttpResponse(f'PLACE {place_id}')
+
+def show_category(request, cat_id):
+    cats = SportCategory.objects.all()
+    title = SportCategory.objects.get(pk=cat_id).title
+    addresses = Address.objects.filter(sport_category_id=cat_id)
+    context = {
+        'addresses': addresses,
+        'cats': cats, 
+        'menu': menu, 
+        'title': title,
+        'cat_selected': cat_id,
+        }
+    return render(request, 'place/index.html', context)
+
    
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')

@@ -6,6 +6,9 @@ class SportCategory(models.Model):
     
     def __str__(self):
         return self.title    
+    
+    def get_absolute_url(self):
+        return reverse('sportcategory', kwargs={'cat_id': self.pk})
 
 class Address(models.Model):
     title = models.CharField(max_length=255)
