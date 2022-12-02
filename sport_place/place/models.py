@@ -14,7 +14,7 @@ class Address(models.Model):
     title = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateField(auto_now=True)
+    time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
     sport_category = models.ForeignKey(SportCategory, on_delete=models.CASCADE)
 

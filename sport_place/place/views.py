@@ -34,9 +34,15 @@ def show_place(request, place_id):
     print(place_id)
     return HttpResponse(f'PLACE {place_id}')
 
+def pageNotFound(request, exception):
+    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+
 def show_category(request, cat_id):
     cats = SportCategory.objects.all()
-    title = SportCategory.objects.get(pk=cat_id).title
+    try:
+        title = SportCategory.objects.get(pk=cat_id).title
+    except Exception:
+        raise Http404
     addresses = Address.objects.filter(sport_category_id=cat_id)
     context = {
         'addresses': addresses,
@@ -46,7 +52,3 @@ def show_category(request, cat_id):
         'cat_selected': cat_id,
         }
     return render(request, 'place/index.html', context)
-
-   
-def pageNotFound(request, exception):
-    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
