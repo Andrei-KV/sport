@@ -7,14 +7,15 @@
 		<p class="first">Category: {{ addr.sport_category.title }}</p>
 		<p class="last">Date: {{ addr.time_update|date:"d-m-Y H:i:s" }}</p>
 		</div></li>
-		<li><h2>{{ addr.title }}</h2> 
-		<p class="sportcategory">*{{ addr.sport_category.title }}</p>
+		{% if addr.description.photo %}
+		<p><img class="img-article-left thumb" src={{addr.description.photo.url}}></p>
+		{% endif %}	
+		<h2>{{ addr.title }}</h2> 
 	{% autoescape on %}
 	<p class="description">{{ addr.description.description|linebreaks|truncatewords:50 }}</p>
 	{% endautoescape %}
 			<div class="clear"></div>
 			<p class="link-read-post"><a href={{ addr.get_absolute_url }}>Read more</a></p>
-			</li>
 	{% endfor %}
 </ul>
 {% endblock %}
