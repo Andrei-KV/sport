@@ -1,7 +1,8 @@
 {% extends 'place/base.html' %}
-
+{% load place_tags %}
 {% block content %}
 <ul class="list-articles">
+	{% get_addresses cat_selected=cat_selected as addresses%}
 	{% for addr in addresses %}
 		<li><div class="article-panel">
 		<p class="first">Category: {{ addr.sport_category.title }}</p>

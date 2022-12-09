@@ -10,11 +10,9 @@ menu = [
     ]
 
 def index(request):
-    cats = SportCategory.objects.all()
-    addresses = Address.objects.all()
+    # addresses = Address.objects.all()
     context = {
-        'addresses': addresses,
-        'cats': cats, 
+        # 'addresses': addresses,
         'menu': menu, 
         'title': 'Head page',
         'cat_selected': 0,
@@ -38,15 +36,13 @@ def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
 def show_category(request, cat_id):
-    cats = SportCategory.objects.all()
     try:
         title = SportCategory.objects.get(pk=cat_id).title
     except Exception:
         raise Http404
-    addresses = Address.objects.filter(sport_category_id=cat_id)
+    # addresses = Address.objects.filter(sport_category_id=cat_id)
     context = {
-        'addresses': addresses,
-        'cats': cats, 
+        # 'addresses': addresses,
         'menu': menu, 
         'title': title,
         'cat_selected': cat_id,
