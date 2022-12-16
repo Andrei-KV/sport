@@ -2,10 +2,10 @@
 {% load place_tags %}
 {% block content %}
 <ul class="list-articles">
-	{% get_addresses_by_cat cat_selected=cat_selected as addresses %}
+	{% get_place_by_cat cat_selected=cat_selected as addresses %}
 	{% for addr in addresses %}
 		<li><div class="article-panel">
-		<p class="first">Category: {{ addr.sport_category.title }}</p>
+		<p class="first">Category: {{ addr.sport_category }}</p>
 		<p class="last">Date: {{ addr.time_update|date:"d-m-Y H:i:s" }}</p>
 		</div></li>
 		{% if addr.description.photo %}

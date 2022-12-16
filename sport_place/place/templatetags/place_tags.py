@@ -19,9 +19,17 @@ def show_category(sort=None, cat_selected=0):
     return {"cats": cats, "cat_selected": cat_selected}
 
 @register.simple_tag()
-def get_addresses_by_cat(cat_selected=0):
+def get_place_by_cat(cat_selected=0):
     if cat_selected == 0:
         return PlaceTitle.objects.all()
     else:
         sport_category_id = SportCategory.objects.get(slug=cat_selected).pk
         return PlaceTitle.objects.filter(sport_category_id=sport_category_id)
+
+@register.simple_tag()
+def get_categories_by_place(filter=None):
+    if not filter:
+        return SportCategory.objects.all()
+    else:
+        sport_category_id = PlaceTitle.objects.get(slug=filter).sport_category_id
+        return SportCategory.objects.get(pk=sport_category_id)

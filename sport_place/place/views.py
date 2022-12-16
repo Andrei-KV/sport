@@ -39,8 +39,7 @@ def show_place(request, place_slug):
     title = get_object_or_404(PlaceTitle, slug=place_slug)
     context = {
         'menu': menu, 
-        'title': title.title,
-        'cat_selected': title.sport_category_id,
+        'cat_selected': title.sport_category.slug,
         'place_slug': place_slug,
         'title': title,
     }

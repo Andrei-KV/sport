@@ -2,9 +2,9 @@
 {% load place_tags %}
 {% block content %}
 <ul class="list-articles">
-	{% get_categories filter=cat_selected  as cat %} 
+	{% get_categories_by_place filter=place_slug  as cat %} 
 		<li><div class="article-panel">
-		<p class="first">Category: {{ cat.title }}</p>
+		<p class="first">Category: {{ cat }}</p>
 		<p class="last">Date: {{ title.time_update|date:"d-m-Y H:i:s" }}</p>
 		</div></li>
 		{% if title.description.photo %}
