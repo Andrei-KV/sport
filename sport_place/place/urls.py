@@ -6,6 +6,6 @@ urlpatterns = [
     path('about/', about, name='about'),
     path('addplace/', add_place, name='add_place'),
     path('login/', login, name='login'),
-    path('place/<int:place_id>/', show_place, name='place'),
-    path('sportcategory/<int:cat_id>/', show_category, name='sportcategory'),
+    path('place/<slug:place_slug>/', show_place, name='place'),
+    path('sportcategory/<slug:cat_slug>/', show_category, name='sportcategory'),
 ]

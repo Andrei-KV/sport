@@ -1,0 +1,17 @@
+{% extends 'place/base.html' %}
+{% load place_tags %}
+{% block content %}
+<ul class="list-articles">
+	{% get_categories filter=cat_selected  as cat %} 
+		<li><div class="article-panel">
+		<p class="first">Category: {{ cat.title }}</p>
+		<p class="last">Date: {{ title.time_update|date:"d-m-Y H:i:s" }}</p>
+		</div></li>
+		{% if title.description.photo %}
+		<p><img class="img-article-left thumb" src={{title.description.photo.url}}></p>
+		{% endif %}	
+		<h2>{{ title }}</h2> 
+
+	<p class="description">{{ title.description|linebreaks }}</p>
+</ul>
+{% endblock %}

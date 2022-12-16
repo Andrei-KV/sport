@@ -3,9 +3,11 @@ from .models import *
 
 class SportCategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
+    list_display_links = ('title',)
+    prepopulated_fields = {'slug': ('title',)}
 
 
-class AddressAdmin(admin.ModelAdmin):
+class PlaceTitleAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'title', 
         'address', 
@@ -17,12 +19,19 @@ class AddressAdmin(admin.ModelAdmin):
     list_editable = ('is_published',)
     list_filter = ('is_published',  'time_create',)
     search_fields = ('title', 'address')
+    prepopulated_fields = {'slug': ('title',)}
 
 class DescriptionAdmin(admin.ModelAdmin):
-    list_display = ('description', 'photo', 'address')
-    list_display_links = ('address',)
-    search_fields = ('address',)
+    list_display = ( 'placetitle', 'photo', 'description',)
+    list_display_links = ('placetitle',)
+    search_fields = ('placetitle',)
+
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ( 'title', 'photo', 'place_title',)
+    list_display_links = ('title',)
+    search_fields = ('title', 'place_title',)    
 
 admin.site.register(SportCategory, SportCategoryAdmin)
-admin.site.register(Address, AddressAdmin)
+admin.site.register(PlaceTitle, PlaceTitleAdmin)
 admin.site.register(Description, DescriptionAdmin)  
+admin.site.register(Image, ImageAdmin)
