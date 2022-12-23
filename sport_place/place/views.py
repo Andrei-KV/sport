@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
+from .forms import *
 
 menu = [
     {'title': 'About', 'url_name': 'about',},
@@ -30,7 +31,23 @@ def about(request):
     return HttpResponse('About site')
 
 def add_place(request):
-    return HttpResponse('Add place')
+    if request.method == 'POST':
+        form = AddPlaceForm(request.POST)
+        if form.is_valid:
+            try:
+                PlaceTitle.objects.create(**form.cleaned_data)
+                return redirect('home')
+            except:
+                form.add_error(None, 'Ошибка добавления поста')
+    else:
+        form = AddPlaceForm()        
+    context = {
+        'menu': menu,
+        'title': 'Add place',
+        'form': form,
+    }
+    return render(request, 'place/addplace.html', context)
+
 
 def login(request):
     return HttpResponse('Log In')
