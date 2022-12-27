@@ -3,8 +3,9 @@
 {% block content %}
 <h2>{{ title }}</h2>
 <form action="{% url 'add_place' %}" method="post">
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
+    {% csrf_token %}
+    <div class="form-error">{{ form_place.non_field_errors }}</div>
+    {% for f in form_place %}
     <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}:</label>{{ f }}
     {% endfor %}
     <p><button type="submit" class="form-button">Add place</button></p>

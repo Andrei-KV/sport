@@ -5,6 +5,7 @@ urlpatterns = [
     path('', index, name='home'),
     path('about/', about, name='about'),
     path('addplace/', add_place, name='add_place'),
+    path('adddescription/', add_description, name='add_description'),
     path('login/', login, name='login'),
     path('place/<slug:place_slug>/', show_place, name='place'),
     path('sportcategory/<slug:cat_slug>/', show_category, name='sportcategory'),

@@ -7,6 +7,7 @@ from .forms import *
 menu = [
     {'title': 'About', 'url_name': 'about',},
     {'title': 'Add place', 'url_name': 'add_place',},
+    {'title': 'Add description', 'url_name': 'add_description'},
     {'title': 'Log In', 'url_name': 'login'},
     ]
 
@@ -32,22 +33,36 @@ def about(request):
 
 def add_place(request):
     if request.method == 'POST':
-        form = AddPlaceForm(request.POST)
-        if form.is_valid:
-            try:
-                PlaceTitle.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except:
-                form.add_error(None, 'Ошибка добавления поста')
+        form_place = AddPlaceForm(request.POST)
+        if form_place.is_valid():
+            # try:
+            form_place.save()
+            return redirect('home')
+            # except:
+            #     form_place.add_error(None, 'Ошибка добавления поста')
     else:
-        form = AddPlaceForm()        
+        form_place = AddPlaceForm()       
     context = {
         'menu': menu,
         'title': 'Add place',
-        'form': form,
+        'form_place': form_place,
     }
     return render(request, 'place/addplace.html', context)
 
+def add_description(request):
+    if request.method == 'POST':
+        form_desc = AddDescriptionForm(request.POST, request.FILES)
+        if form_desc.is_valid():
+            form_desc.save()
+            return redirect('home')
+    else:
+        form_desc = AddDescriptionForm()      
+    context = {
+        'menu': menu,
+        'title': 'Add description',
+        'form_desc': form_desc,
+    }
+    return render(request, 'place/adddescription.html', context)
 
 def login(request):
     return HttpResponse('Log In')
