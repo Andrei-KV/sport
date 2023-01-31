@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from .models import *
 from .forms import *
@@ -18,15 +19,26 @@ menu = [
 #         raise Http404
 #     return title
 
-def index(request):
-    # addresses = Address.objects.all()
-    context = {
-        # 'addresses': addresses,
-        'menu': menu, 
-        'title': 'Head page',
-        'cat_selected': 0,
-        }
-    return render(request, 'place/index.html', context)
+# def index(request):
+#     # addresses = Address.objects.all()
+#     context = {
+#         # 'addresses': addresses,
+#         'menu': menu, 
+#         'title': 'Head page',
+#         'cat_selected': 0,
+#         }
+#     return render(request, 'place/index.html', context)
+
+class PlaceHome(ListView):
+    model = PlaceTitle
+    template_name = 'place/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Head page'
+        context['menu'] = menu
+        context['cat_selected'] = 0
+        return context
 
 def about(request):
     return HttpResponse('About site')
@@ -80,18 +92,31 @@ def show_place(request, place_slug):
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
 
-def show_category(request, cat_slug):
-    category = get_object_or_404(SportCategory, slug=cat_slug)
-    # try:
-    #     title = SportCategory.objects.get(pk=cat_id).title
-    # except Exception:
-    #     raise Http404
-    # addresses = Address.objects.filter(sport_category_id=cat_id)
-    context = {
-        # 'addresses': addresses,
-        'menu': menu, 
-        'title': category.title,
-        'cat_selected': cat_slug,
-        }
-    return render(request, 'place/index.html', context)
+class PlaceSportCategory(ListView):
+    model = PlaceTitle
+    template_name = 'place/index.html'
+
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['cat_slug']
+        category = get_object_or_404(SportCategory, slug=slug)
+        context = super().get_context_data(**kwargs)
+        context['title'] = category
+        context['menu'] = menu
+        context['cat_selected'] = slug
+        return context
+
+# def show_category(request, cat_slug):
+#     category = get_object_or_404(SportCategory, slug=cat_slug)
+#     # try:
+#     #     title = SportCategory.objects.get(pk=cat_id).title
+#     # except Exception:
+#     #     raise Http404
+#     # addresses = Address.objects.filter(sport_category_id=cat_id)
+#     context = {
+#         # 'addresses': addresses,
+#         'menu': menu, 
+#         'title': category.title,
+#         'cat_selected': cat_slug,
+#         }
+#     return render(request, 'place/index.html', context)
 

@@ -21,10 +21,10 @@ def show_category(sort=None, cat_selected=0):
 @register.simple_tag()
 def get_place_by_cat(cat_selected=0):
     if cat_selected == 0:
-        return PlaceTitle.objects.all()
+        return PlaceTitle.objects.filter(is_published=True)
     else:
         sport_category_id = SportCategory.objects.get(slug=cat_selected).pk
-        return PlaceTitle.objects.filter(sport_category_id=sport_category_id)
+        return PlaceTitle.objects.filter(sport_category_id=sport_category_id, is_published=True)
 
 @register.simple_tag()
 def get_categories_by_place(filter=None):
